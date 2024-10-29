@@ -103,8 +103,13 @@ class AttrsDescriptor:
 
     def _init_slots(self):
         """ Initialize the slots of this class """
+        def removeprefix(input_string, prefix):
+            if prefix and input_string.startswith(prefix):
+                return input_string[len(prefix):]
+            return input_string
+
         for name, val in self.arg_properties.items():
-            setattr(self, name.removeprefix('tt.') + '_' + str(self.property_values[name]), val)
+            setattr(self, removeprefix(name, 'tt.') + '_' + str(self.property_values[name]), val)
 
     def get_fn_attrs(self) -> Dict:
         """
